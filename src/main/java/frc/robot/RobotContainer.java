@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -36,7 +37,7 @@ public class RobotContainer {
   public static final XboxController m_driverController = new XboxController(0);
 
   /*Buttons */
-  //private final JoystickButton exampleCommand = new JoystickButton(m_driverController, XboxController.Button.kY.value);
+  private final JoystickButton exampleCommand = new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */

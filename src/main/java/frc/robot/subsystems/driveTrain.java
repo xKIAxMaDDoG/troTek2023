@@ -28,6 +28,9 @@ public class driveTrain extends SubsystemBase {
     leftRear = new Spark(3);
     rightFront = new Spark(1);
     rightRear = new Spark(0);
+
+    leftFront.setInverted(true);
+    leftRear.setInverted(true);
     
     leftMotors = new MotorControllerGroup(leftFront, leftRear);
     rightMotors = new MotorControllerGroup(rightFront, rightRear);
@@ -46,7 +49,7 @@ public class driveTrain extends SubsystemBase {
   }
 
   public void curvatureDrive(double speed, double rotation, boolean quickturn){
-    m_diffDrive.curvatureDrive(speed, rotation, quickturn);
+    m_diffDrive.curvatureDrive(speed, -rotation, quickturn);
   }
 
   public void driveTrainStop() {
