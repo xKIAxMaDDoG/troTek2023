@@ -4,17 +4,21 @@
 
 package frc.robot.commands;
 
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.driveTrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
+public class autoDoNothing extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  private final driveTrain m_subsystem;
 
-
-  public ExampleCommand() {
+  /**
+   * Creates a new ExampleCommand.
+   */
+  public autoDoNothing(driveTrain subsystem) {
+    m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_exampleSubsystem);
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.

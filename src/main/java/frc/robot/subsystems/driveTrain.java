@@ -49,7 +49,7 @@ public class driveTrain extends SubsystemBase {
   }
 
   public void curvatureDrive(double speed, double rotation, boolean quickturn){
-    m_diffDrive.curvatureDrive(speed, -rotation, quickturn);
+    m_diffDrive.curvatureDrive(speed*.75, -rotation, quickturn);
   }
 
   public void driveTrainStop() {

@@ -5,12 +5,13 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.autoDoNothing;
 import frc.robot.commands.driveWithController;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -18,6 +19,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.autoDoNothing;
+import frc.robot.commands.Auto.autoCrossLine;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,18 +31,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  */
 public class RobotContainer {
   
-  /*Subsystems */
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final driveTrain m_driveTrain = new driveTrain();
-  private final intake m_intake = new intake();
-  private final arm m_arm = new arm();
+  /*Subsystems*/
+  public final static ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public final static driveTrain m_driveTrain = new driveTrain();
+  public final static intake m_intake = new intake();
+  public final static arm m_arm = new arm();
 
-  /*Controllers */
+  /*Commands*/
+  public final static autoDoNothing m_autoDoNothing = new autoDoNothing(m_driveTrain);
+  public final static autoCrossLine m_autoCrossLine = new autoCrossLine();
+
+  /*Controllers*/
   public static final XboxController m_driverController = new XboxController(0);
 
-  /*Buttons */
-  private final JoystickButton exampleCommand = new JoystickButton(m_driverController, XboxController.Button.kY.value);
+  /*Buttons*/
+  public final static JoystickButton exampleCommand = new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
+  // A chooser for autonomous commands
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -48,6 +58,13 @@ public class RobotContainer {
 
     // Configure the trigger bindings
     configureBindings();
+
+    // Add commands to the autonomous command chooser
+    m_chooser.setDefaultOption("Do Nothing", m_autoDoNothing);
+    m_chooser.addOption("Cross Line", m_autoCrossLine);
+
+    // Put the chooser on the dashboard
+  SmartDashboard.putData(m_chooser);
     
   }
 
@@ -64,7 +81,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+        .onTrue(new ExampleCommand());
 
         //intake.onTrue(new InstantCommand(() -> m_Intake.runIntakeSpeed(-1)));
         //intake.onFalse(new InstantCommand(() -> m_Intake.runIntakeSpeed(0)));
@@ -81,6 +98,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_chooser.getSelected();
   }
 }
