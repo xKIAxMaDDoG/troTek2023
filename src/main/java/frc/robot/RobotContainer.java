@@ -18,13 +18,10 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Auto.*;
+import com.kauailabs.navx.frc.AHRS;
+import com.kauailabs.navx.frc.AHRS.SerialDataType;
+import edu.wpi.first.wpilibj.SPI;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
   
   /*Subsystems*/
@@ -48,6 +45,9 @@ public class RobotContainer {
   /*Buttons*/
   public final static JoystickButton exampleCommand = new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
+  /*Gyro*/
+  public static final AHRS m_ahrs = new AHRS(SPI.Port.kMXP);
+  
   /*A chooser for autonomous commands*/
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -67,19 +67,8 @@ public class RobotContainer {
     m_chooser.addOption("Score And Balance", m_autoScoreAndBalance);
 
     // Put the chooser on the dashboard
-  SmartDashboard.putData(m_chooser);
-    
+    SmartDashboard.putData(m_chooser);
   }
-
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
 
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
@@ -103,4 +92,6 @@ public class RobotContainer {
     // An example command will be run in autonomous
     return m_chooser.getSelected();
   }
+  
+  
 }

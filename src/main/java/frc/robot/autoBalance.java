@@ -2,6 +2,7 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import frc.robot.RobotContainer;
 
 public class autoBalance {
     private BuiltInAccelerometer mRioAccel;
@@ -61,12 +62,14 @@ public class autoBalance {
     }
 
     public double getPitch() {
-        return Math.atan2((-mRioAccel.getX()),
-                Math.sqrt(mRioAccel.getY() * mRioAccel.getY() + mRioAccel.getZ() * mRioAccel.getZ())) * 57.3;
+        //return Math.atan2((-mRioAccel.getX()),
+          //      Math.sqrt(mRioAccel.getY() * mRioAccel.getY() + mRioAccel.getZ() * mRioAccel.getZ())) * 57.3;
+        return RobotContainer.m_ahrs.getPitch();
     }
 
     public double getRoll() {
-        return Math.atan2(mRioAccel.getY(), mRioAccel.getZ()) * 57.3;
+        //return Math.atan2(mRioAccel.getY(), mRioAccel.getZ()) * 57.3;
+        return RobotContainer.m_ahrs.getRoll();
     }
 
     // returns the magnititude of the robot's tilt calculated by the root of
