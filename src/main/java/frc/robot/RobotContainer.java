@@ -4,24 +4,20 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.autoDoNothing;
 import frc.robot.commands.driveWithController;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.autoDoNothing;
-import frc.robot.commands.Auto.autoCrossLine;
+import frc.robot.commands.Auto.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -40,6 +36,11 @@ public class RobotContainer {
   /*Commands*/
   public final static autoDoNothing m_autoDoNothing = new autoDoNothing(m_driveTrain);
   public final static autoCrossLine m_autoCrossLine = new autoCrossLine();
+  public final static autoBalanceOnPlatform m_autoBalanceOnPlatform = new autoBalanceOnPlatform();
+  public final static autoScoreAndBalance m_autoScoreAndBalance = new autoScoreAndBalance();
+
+  /*Auto Balance*/
+  public final static autoBalance m_autoBalance = new autoBalance();
 
   /*Controllers*/
   public static final XboxController m_driverController = new XboxController(0);
@@ -47,7 +48,7 @@ public class RobotContainer {
   /*Buttons*/
   public final static JoystickButton exampleCommand = new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
-  // A chooser for autonomous commands
+  /*A chooser for autonomous commands*/
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -62,6 +63,8 @@ public class RobotContainer {
     // Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Do Nothing", m_autoDoNothing);
     m_chooser.addOption("Cross Line", m_autoCrossLine);
+    m_chooser.addOption("Auto Balance", m_autoBalanceOnPlatform);
+    m_chooser.addOption("Score And Balance", m_autoScoreAndBalance);
 
     // Put the chooser on the dashboard
   SmartDashboard.putData(m_chooser);

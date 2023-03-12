@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class driveTrain extends SubsystemBase {
 
-  private final Spark leftFront;
-  private final Spark leftRear;
-  private final Spark rightFront;
-  private final Spark rightRear;
+  public final Spark leftFront;
+  public final Spark leftRear;
+  public final Spark rightFront;
+  public final Spark rightRear;
 
   private final MotorControllerGroup leftMotors;
   private final MotorControllerGroup rightMotors;
@@ -35,7 +36,8 @@ public class driveTrain extends SubsystemBase {
     leftMotors = new MotorControllerGroup(leftFront, leftRear);
     rightMotors = new MotorControllerGroup(rightFront, rightRear);
 
-    m_diffDrive = new DifferentialDrive(leftMotors, rightMotors);    
+    m_diffDrive = new DifferentialDrive(leftMotors, rightMotors);
+    
   }
 
   @Override
@@ -54,6 +56,24 @@ public class driveTrain extends SubsystemBase {
 
   public void driveTrainStop() {
     m_diffDrive.tankDrive(0, 0);
+  }
+
+  //helper function for setting motor controller speeds
+  public void setSpeed(double left, double right){
+    leftFront.set(left);
+    leftRear.set(left);
+    rightFront.set(right);
+    rightRear.set(right);
+  }
+
+  public void balanceCommand() {
+    double speed = RobotContainer.m_autoBalance.autoBalanceRoutine();
+    setSpeed(speed, speed);
+  }
+
+  public void balanceAndScoreCommand() {
+    double speed = RobotContainer.m_autoBalance.scoreAndBalance();
+    setSpeed(speed, speed);
   }
 }
 
