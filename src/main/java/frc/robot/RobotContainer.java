@@ -5,7 +5,6 @@
 package frc.robot;
 
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.autoDoNothing;
 import frc.robot.commands.driveWithController;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.*;
@@ -21,6 +20,7 @@ import frc.robot.commands.Auto.*;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.cameraserver.CameraServer;
 
 public class RobotContainer {
   
